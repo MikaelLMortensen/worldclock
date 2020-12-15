@@ -5,7 +5,7 @@
         "core": "*",
         "radio": "*",
         "microphone": "*",
-        "ESP8266_Time": "github:mikaellmortensen/pxt-esp8266iot#v1.1.11"
+        "ESP8266_Time": "github:mikaellmortensen/pxt-esp8266iot#v1.1.12"
     },
     "files": [
         "main.blocks",

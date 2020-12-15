@@ -1,21 +1,19 @@
 
+input.onButtonPressed(Button.A, function () {
+    if (ESP8266_IoT.wifiState(true)) {
+        basic.showIcon(IconNames.SmallSquare)
+        let wcString = ESP8266_IoT.getWorldClock()
+        basic.showString(wcString)
+        basic.showIcon(IconNames.Yes)
+    } else {
+        basic.showIcon(IconNames.No)
+    }
+})
+
 input.onButtonPressed(Button.B, function () {
     if (ESP8266_IoT.wifiState(true)) {
         basic.showIcon(IconNames.SmallSquare)
-        let timeString = ESP8266_IoT.getTime()
-        let jsonStart = timeString.indexOf("{")
-        let jsonEnd = timeString.indexOf("}")
-
-        if (jsonStart > 0) {
-            timeString = timeString.substr(jsonStart,jsonEnd)
-            basic.showString(timeString)
-        }
-        else
-        {
-            basic.showString(timeString.length.toString())
-            basic.showIcon(IconNames.Sad)
-        }
-
+        ESP8266_IoT.getWorldClockCall()
     } else {
         basic.showIcon(IconNames.No)
     }
@@ -33,9 +31,10 @@ basic.showIcon(IconNames.Square)
 basic.forever(function () {
 	
 })
-serial.onDataReceived("{", function () {
+
+serial.onDataReceived(serial.delimiters(Delimiters.NewLine), function () {
     basic.showString("REC:")
-    let serialString = serial.readUntil("}")
+    let serialString = serial.readLine()
     basic.showString(serialString)
     basic.showString("END")
 })
